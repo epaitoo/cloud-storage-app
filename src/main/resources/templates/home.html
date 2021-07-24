@@ -83,7 +83,7 @@
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"><i class="ti-user m-r-5 m-l-5"></i>
                                     My Profile</a>
-                                <a class="dropdown-item"><i class="ti-wallet m-r-5 m-l-5"></i>
+                                <a class="dropdown-item"><i class="fa fa-power-off m-r-5 m-l-5"></i>
                                     Logout</a>
                             </ul>
                         </li>
@@ -115,15 +115,15 @@
                                 <div class="user-content hide-menu m-l-10">
                                     <a href="#" class="" id="Userdd" role="button"
                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <h5 class="m-b-0 user-name font-medium">Steave Jobs <i
-                                                class="fa fa-angle-down"></i></h5>
-                                        <span class="op-5 user-email">varun@gmail.com</span>
+                                        <h5 class="m-b-0 user-name font-medium" th:text="${userFullName}">
+                                            <i class="fa fa-angle-down"></i></h5>
+                                        <span class="op-5 user-email" th:text="${username}"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
                                         <a class="dropdown-item" href=""><i
                                                 class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                         <a class="dropdown-item" href=""><i
-                                                class="ti-wallet m-r-5 m-l-5"></i> Logout</a>
+                                                class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                                     </div>
                                 </div>
                             </div>
@@ -138,24 +138,17 @@
                                                      href="#" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                 class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i
-                                class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span></a></li>
+                                                     href="#" aria-expanded="false"><i class="mdi mdi-face"></i><span
+                                class="hide-menu">Files</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                      href="#" aria-expanded="false"><i class="mdi mdi-border-all"></i><span
-                                class="hide-menu">Table</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-face"></i><span
-                                class="hide-menu">Icon</span></a></li>
+                                class="hide-menu">Credentials</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                      href="#" aria-expanded="false"><i class="mdi mdi-file"></i><span
-                                class="hide-menu">Blank</span></a></li>
+                                class="hide-menu">Notes</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-alert-outline"></i><span
-                                class="hide-menu">404</span></a></li>
-                        <li class="text-center p-40 upgrade-btn">
-                            <a th:href="@{https://www.wrappixel.com/templates/xtremeadmin/}"
-                               class="btn d-block w-100 btn-danger text-white" target="_blank">Upgrade to Pro</a>
-                        </li>
+                                                     href="#" aria-expanded="false"><i
+                                class="mdi mdi-account-network"></i><span class="hide-menu">My Profile</span></a></li>
                     </ul>
 
                 </nav>
