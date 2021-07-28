@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <title>Home</title>
+    <title>Files</title>
     <link rel="canonical" th:href="@{https://www.wrappixel.com/templates/xtreme-admin-lite/}" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
          data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
@@ -53,6 +52,7 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
+
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
@@ -95,8 +95,6 @@
             </nav>
         </header>
 
-
-
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -129,13 +127,9 @@
                             </div>
                             <!-- End User Profile-->
                         </li>
-<!--                        <li class="p-15 m-t-10"><a href=""-->
-<!--                                                   class="btn d-block w-100 create-btn text-white no-block d-flex align-items-center"><i-->
-<!--                                class="fa fa-plus-square"></i> <span class="hide-menu m-l-5">Create New</span> </a>-->
-<!--                        </li>-->
-                        <!-- User Profile-->
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                                     href="/home" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                 class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                      href="/files" aria-expanded="false"><i class="mdi mdi-face"></i><span
@@ -150,13 +144,11 @@
                                                      href="#" aria-expanded="false"><i
                                 class="mdi mdi-account-network"></i><span class="hide-menu">My Profile</span></a></li>
                     </ul>
-
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-
 
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
@@ -168,20 +160,14 @@
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-5">
-                        <h4 class="page-title">Starter Page</h4>
+                        <h4 class="page-title">Files</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Files</li>
                                 </ol>
                             </nav>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="text-end upgrade-btn">
-                            <a th:href="@{https://www.wrappixel.com/templates/xtremeadmin/}" class="btn btn-danger text-white"
-                               target="_blank">Upgrade to Pro</a>
                         </div>
                     </div>
                 </div>
@@ -196,25 +182,85 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <div th:if="${message}" class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <p th:text="${message}"></p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- Upload & Files Table Content -->
+                <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-4">
                         <div class="card">
                             <div class="card-body">
-                                This is some text within a card block.
+                                <h4 class="card-title">Upload A File</h4>
+                                <form action="#" th:action="@{/upload-file}" enctype="multipart/form-data" method="POST">
+                                    <div class="container">
+                                        <div class="row" style="margin: 1em;">
+                                            <div class="col-sm-8">
+                                                <input type="file" class="form-control-file" id="fileUpload" name="file">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-dark">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="card-title">Files</h4>
+                                        <h5 class="card-subtitle">All uploaded files</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col-6">FileName</th>
+                                            <th scope="col-6">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="file: ${fileList}">
+                                            <td th:text="${file.filename}"></td>
+                                            <td>
+                                                <a target="_blank" class="btn btn-success">
+                                                    <i class="m-r-10 mdi mdi-eye-outline"></i>
+                                                </a>
+                                                <a  class="btn btn-danger">
+                                                    <i class="m-r-10 mdi mdi-delete"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody th:if="${#lists.isEmpty(fileList)}">
+                                        <tr>
+                                            <td colspan="3">No Data found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
-                <!-- End PAge Content -->
+                <!-- End Upload & Files Table Content -->
                 <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+
+
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -234,7 +280,10 @@
     </div>
 
     <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/dist/js/popper.min.js}"></script>
+    <script th:src="@{/dist/js/jquery-slim.min.js}"></script>
     <!-- Bootstrap tether Core JavaScript -->
+    <script th:src="@{/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/dist/js/app-style-switcher.js}"></script>
     <!--Wave Effects -->
@@ -244,5 +293,7 @@
     <!--Custom JavaScript -->
     <script th:src="@{/dist/js/custom.js}"></script>
 
+
 </body>
 
+</html>
