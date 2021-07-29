@@ -49,7 +49,7 @@ public class UserFileService {
     * @param int id
     * @return UserFile
     * */
-    public UserFile showFile(int id) {
+    public UserFile getFile(int id) {
         return userFileMapper.findById(id);
     }
 
