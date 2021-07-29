@@ -236,10 +236,10 @@
                                         <tr th:each="file: ${fileList}">
                                             <td th:text="${file.filename}"></td>
                                             <td>
-                                                <a target="_blank" class="btn btn-success">
+                                                <a th:href="@{/download/{id}(id = ${file.fileId})}" target="_blank" class="btn btn-success">
                                                     <i class="m-r-10 mdi mdi-eye-outline"></i>
                                                 </a>
-                                                <a  class="btn btn-danger">
+                                                <a th:href="@{/file/delete/{id}(id = ${file.fileId})}" class="btn btn-danger">
                                                     <i class="m-r-10 mdi mdi-delete"></i>
                                                 </a>
                                             </td>
