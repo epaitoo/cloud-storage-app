@@ -115,7 +115,7 @@
                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <h5 class="m-b-0 user-name font-medium" th:text="${userFullName}">
                                             <i class="fa fa-angle-down"></i></h5>
-                                        <span class="op-5 user-email" th:text="${username}"></span>
+<!--                                        <span class="op-5 user-email" th:text="${username}"></span>-->
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
                                         <a class="dropdown-item" href=""><i
@@ -135,13 +135,13 @@
                                                      href="/files" aria-expanded="false"><i class="mdi mdi-face"></i><span
                                 class="hide-menu">Files</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-border-all"></i><span
+                                                     href="/credentials" aria-expanded="false"><i class="mdi mdi-border-all"></i><span
                                 class="hide-menu">Credentials</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-file"></i><span
+                                                     href="/notes" aria-expanded="false"><i class="mdi mdi-file"></i><span
                                 class="hide-menu">Notes</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i
+                                                     href="/profile" aria-expanded="false"><i
                                 class="mdi mdi-account-network"></i><span class="hide-menu">My Profile</span></a></li>
                     </ul>
                 </nav>
@@ -279,11 +279,13 @@
 
     </div>
 
-    <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
-    <script th:src="@{/dist/js/popper.min.js}"></script>
     <script th:src="@{/dist/js/jquery-slim.min.js}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
+    <script th:src="@{/dist/js/popper.min.js}"></script>
     <script th:src="@{/dist/js/bootstrap.min.js}"></script>
+
+
+    <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
     <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/dist/js/app-style-switcher.js}"></script>
     <!--Wave Effects -->

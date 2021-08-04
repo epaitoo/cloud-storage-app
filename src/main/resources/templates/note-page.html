@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <title>Home</title>
+    <title>Notes</title>
     <link rel="canonical" th:href="@{https://www.wrappixel.com/templates/xtreme-admin-lite/}" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
          data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
@@ -53,6 +52,7 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
+
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
@@ -95,8 +95,6 @@
             </nav>
         </header>
 
-
-
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -129,13 +127,9 @@
                             </div>
                             <!-- End User Profile-->
                         </li>
-<!--                        <li class="p-15 m-t-10"><a href=""-->
-<!--                                                   class="btn d-block w-100 create-btn text-white no-block d-flex align-items-center"><i-->
-<!--                                class="fa fa-plus-square"></i> <span class="hide-menu m-l-5">Create New</span> </a>-->
-<!--                        </li>-->
-                        <!-- User Profile-->
+
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="#" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                                     href="/home" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                 class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                      href="/files" aria-expanded="false"><i class="mdi mdi-face"></i><span
@@ -147,16 +141,14 @@
                                                      href="/notes" aria-expanded="false"><i class="mdi mdi-file"></i><span
                                 class="hide-menu">Notes</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                                     href="profile" aria-expanded="false"><i
+                                                     href="/profile" aria-expanded="false"><i
                                 class="mdi mdi-account-network"></i><span class="hide-menu">My Profile</span></a></li>
                     </ul>
-
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-
 
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
@@ -168,20 +160,20 @@
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-5">
-                        <h4 class="page-title">Starter Page</h4>
+                        <h4 class="page-title">Notes</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Notes</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="text-end upgrade-btn">
-                            <a th:href="@{https://www.wrappixel.com/templates/xtremeadmin/}" class="btn btn-danger text-white"
-                               target="_blank">Upgrade to Pro</a>
+                            <button type="button" class="btn btn-danger text-white" onclick="showNoteModal()">
+                                Add a Note</button>
                         </div>
                     </div>
                 </div>
@@ -196,25 +188,99 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <div th:if="${message}" class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <p th:text="${message}"></p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- Notes Table Content -->
+                <!-- ============================================================== -->
                 <div class="row">
+
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                This is some text within a card block.
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="card-title">Notes</h4>
+                                        <h5 class="card-subtitle">All User Notes</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col-3">Title</th>
+                                            <th scope="col-6">Description</th>
+                                            <th scope="col-3">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="note: ${notes}">
+                                            <td th:text="${note.notetitle}"></td>
+                                            <td th:text="${note.notedescription}"></td>
+                                            <td>
+                                                <a th:href="@{/notes/view/{id}(id = ${note.noteid})}" target="_blank" class="btn btn-success">
+                                                    <i class="m-r-10 mdi mdi-eye-outline"></i>
+                                                </a>
+                                                <a th:href="@{/notes/delete/{id}(id = ${notes.noteid})}" class="btn btn-danger">
+                                                    <i class="m-r-10 mdi mdi-delete"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody th:if="${#lists.isEmpty(notes)}">
+                                        <tr>
+                                            <td colspan="3">No Data found</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
-                <!-- End PAge Content -->
+                <!-- End Upload & Files Table Content -->
                 <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+
+                <!--   Notes Modal             -->
+                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/create-note}" th:object="${note}" action="#" method="post">
+                                    <input type="hidden" name="noteId" th:field="*{noteid}" id="note-id">
+                                    <input type="hidden" name="userId" th:field="*{userid}" id="user-id">
+                                    <div class="form-group">
+                                        <label for="note-title" class="col-form-label">Title</label>
+                                        <input type="text" name="noteTitle" th:field="*{notetitle}"  class="form-control" id="note-title" maxlength="20" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="note-description" class="col-form-label">Description</label>
+                                        <textarea class="form-control" th:field="*{notedescription}" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
+                                    </div>
+                                    <button id="noteSubmit" type="submit" class="d-none"></button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -233,6 +299,11 @@
 
     </div>
 
+    <script th:src="@{/dist/js/jquery-slim.min.js}"></script>
+    <script th:src="@{/dist/js/popper.min.js}"></script>
+    <script th:src="@{/dist/js/bootstrap.min.js}"></script>
+
+
     <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
@@ -244,5 +315,18 @@
     <!--Custom JavaScript -->
     <script th:src="@{/dist/js/custom.js}"></script>
 
+    <script type="text/javascript">
+          // For opening the note modal
+        function showNoteModal(noteId, noteTitle, noteDescription) {
+            $('#note-id').val(noteId ? noteId : '');
+            $('#user-id').val(userId ? userId : '');
+            $('#note-title').val(noteTitle ? noteTitle : '');
+            $('#note-description').val(noteDescription ? noteDescription : '');
+            $('#noteModal').modal('show');
+        }
+    </script>
+
+
 </body>
 
+</html>
