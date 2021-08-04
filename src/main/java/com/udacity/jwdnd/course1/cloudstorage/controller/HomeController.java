@@ -25,7 +25,6 @@ public class HomeController {
         String fullName = user.getFirstName() + " " + user.getLastName();
 
         model.addAttribute("userFullName", fullName);
-        model.addAttribute("username", username);
 
         return "home";
     }

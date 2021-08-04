@@ -46,7 +46,6 @@ public class UserFileController {
 
         model.addAttribute("fileList", this.userFileService.getAllUserFiles(userid));
         model.addAttribute("userFullName", fullName);
-        model.addAttribute("username", username);
 
         return "file-page";
     }
