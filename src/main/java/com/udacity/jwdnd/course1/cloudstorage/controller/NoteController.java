@@ -7,10 +7,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -32,7 +29,6 @@ public class NoteController {
         String fullName = user.getFirstName() + " " + user.getLastName();
         int userId = user.getUserid();
 
-        note.setUserid(userId);
 
         model.addAttribute("userFullName", fullName);
         model.addAttribute("userid", userId);
@@ -45,23 +41,23 @@ public class NoteController {
     @PostMapping("/create-note")
     public String createNote(@ModelAttribute Note note, Authentication authentication, RedirectAttributes attributes) {
         int userId = this.getUserId(authentication);
-        note.setUserid(userId);
         try{
             noteService.createNote(note, userId);
             attributes.addFlashAttribute("message", "Note Added Successfully");
             return "redirect:/notes";
         } catch (Exception e) {
             String errorMessage = "Could not add Note";
-            attributes.addFlashAttribute("message", errorMessage);
+            attributes.addFlashAttribute("errorMessage", errorMessage);
             return "redirect:/notes";
         }
 
     }
 
     @GetMapping("/notes/view/{id}")
-    public void viewNote(@PathVariable("id") int id, Model model, RedirectAttributes attributes) {
+    @ResponseBody
+    public Note viewNote(@PathVariable("id") int id, Model model) {
         Note note = this.noteService.getNote(id);
-        model.addAttribute("note", note);
+        return note;
     }
 
     @PostMapping("/note/update")
@@ -73,7 +69,7 @@ public class NoteController {
             return "redirect:/notes";
         } catch (Exception e) {
             String errorMessage = "Could not update Note";
-            attributes.addFlashAttribute("message", errorMessage);
+            attributes.addFlashAttribute("errorMessage", errorMessage);
             return "redirect:/notes";
         }
     }
@@ -86,7 +82,7 @@ public class NoteController {
             return "redirect:/notes";
         } catch (Exception e) {
             String errorMessage = "Could not Delete File";
-            attributes.addFlashAttribute("message", errorMessage);
+            attributes.addFlashAttribute("errorMessage", errorMessage);
             return "redirect:/notes";
         }
     }
