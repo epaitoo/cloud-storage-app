@@ -68,7 +68,8 @@ public class CredentialController {
             attributes.addFlashAttribute("message", "Note Updated Successfully");
             return "redirect:/credentials";
         } catch (Exception e) {
-            String errorMessage = "Could not add Credential";
+            String errorMessage = "Could not update Credential";
+//            String errorMessage = e.getMessage();
             attributes.addFlashAttribute("errorMessage", errorMessage);
             return "redirect:/credentials";
         }

@@ -52,7 +52,12 @@ public class CredentialService {
      * @return Credential credential
      * */
     public Credential getCredential(int id) {
-        return credentialMapper.findById(id);
+        Credential credential = credentialMapper.findById(id);
+        String encryptedPassword =  credential.getPassword();
+        String key = credential.getKey();
+        String decryptPassword = this.decryptPassword(encryptedPassword, key);
+        credential.setPassword(decryptPassword);
+        return credential;
     }
 
     /*
@@ -63,8 +68,8 @@ public class CredentialService {
      * */
     public void updateCredential(Credential credential, int userid) {
         String password = credential.getPassword();
-        String encodedPassword = encryptionService.encryptValue(password, credential.getKey());
-        credentialMapper.update(new Credential(credential.getCredentialid(), credential.getUrl(), credential.getUsername(), credential.getKey(), encodedPassword, userid));
+        String encryptedPassword = encryptionService.encryptValue(password, credential.getKey());
+        credentialMapper.update(new Credential(credential.getCredentialid(), credential.getUrl(), credential.getUsername(), credential.getKey(), encryptedPassword, userid));
     }
 
     /*
